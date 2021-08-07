@@ -13,9 +13,9 @@ void main() async {
 
   await Hive.initFlutter();
 
-  await Hive.openBox('page_number');
+  Hive.registerAdapter(PageNumberAdapter());
 
-  // Hive.registerAdapter()
+  await Hive.openBox<PageNumber>('page_number');
 
   runApp(MainPage());
 }
@@ -66,14 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
     final box = NumBox.getPageNumber();
-    box.put('number', _counter);
+    final pageNumber = PageNumber()..number = _counter;
+    box.put('number', pageNumber);
   }
 
   @override
   void initState() {
     final box = NumBox.getPageNumber();
     if (box.get('number') == null) {
-      box.put('number', 0);
+      final pageNumber = PageNumber()..number = 0;
+      box.put('number', pageNumber);
     }
 
     super.initState();
@@ -99,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: ValueListenableBuilder<Box>(
+          child: ValueListenableBuilder<Box<PageNumber>>(
             valueListenable: NumBox.getPageNumber().listenable(),
             builder: (context, box, _) {
               return Column(
@@ -109,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     'You have pushed the button this many times:',
                   ),
                   Text(
-                    '${box.get('number')}',
+                    '${box.get('number')!.number}',
                     style: Theme.of(context).textTheme.headline4,
                   ),
                 ],
