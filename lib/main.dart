@@ -6,6 +6,7 @@ import 'package:midterm/pages/main_page.dart';
 import 'package:midterm/placeholder.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:midterm/models/last_time_item.dart';
 
 import 'pages/pages.dart';
 
@@ -15,10 +16,10 @@ void main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(PageNumberAdapter());
-  Hive.registerAdapter(ListItemAdapter());
+  Hive.registerAdapter(LastTimeItemAdapter());
 
   await Hive.openBox<PageNumber>('page_number');
-  await Hive.openBox<ListItem>('list');
+  await Hive.openBox<LastTimeItem>('last_time_list');
 
   runApp(MainPage());
 }
