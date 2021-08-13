@@ -239,7 +239,10 @@ class _LastTimePageState extends State<LastTimePage> {
           actions: <Widget>[
             Column(
               children: [
-                Text('Title'),
+                Text(
+                  'Title',
+                  style: TextStyle(fontSize: 20),
+                ),
                 TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -253,7 +256,7 @@ class _LastTimePageState extends State<LastTimePage> {
                 SizedBox(
                   height: 10,
                 ),
-                Text('Tag'),
+                Text('Tag', style: TextStyle(fontSize: 20)),
                 DropdownButton<String>(
                   value: newLastTime.tag,
                   icon: const Icon(Icons.pages),
@@ -277,7 +280,7 @@ class _LastTimePageState extends State<LastTimePage> {
                   children: [
                     FlatButton(
                       child: new Text(
-                        "Yes",
+                        "Create",
                         textScaleFactor: 0.9,
                       ),
                       onPressed: () {
@@ -287,7 +290,7 @@ class _LastTimePageState extends State<LastTimePage> {
                     ),
                     FlatButton(
                       child: new Text(
-                        "No",
+                        "Leave",
                         textScaleFactor: 0.9,
                       ),
                       onPressed: () {
