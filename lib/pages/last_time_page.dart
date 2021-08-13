@@ -102,8 +102,10 @@ class _LastTimePageState extends State<LastTimePage> {
                         final lastTime = lastTimeList[index];
                         return lastTimeBox(lastTime);
                       },
-                      onReorder: (int start, int current) {
+                      onReorder: (int start, int current) async {
                         List<LastTimeItem> _list = List.from(lastTimeList);
+                        // LastTimeItem? item = box.getAt(start);
+
                         // dragging from top to bottom
                         if (start < current) {
                           int end = current - 1;
@@ -124,7 +126,14 @@ class _LastTimePageState extends State<LastTimePage> {
                           }
                           _list[current] = startItem;
                         }
+
                         print('reoder');
+                        _list.forEach((e) {
+                          print(e.title);
+                        });
+
+                        await box.clear();
+                        box.addAll(_list);
                       },
                     );
                   }),
@@ -291,8 +300,5 @@ class _LastTimePageState extends State<LastTimePage> {
     } else if (currentSort == listSort[2]) {
       lastTimeList.sort((a, b) => a.lastTime.compareTo(b.lastTime));
     }
-    lastTimeList.forEach((e) {
-      print(e.lastTime);
-    });
   }
 }
