@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:midterm/models/list_item.dart';
 import 'package:midterm/models/boxes.dart';
 import 'package:midterm/models/page_number.dart';
+import 'package:midterm/pages/last_time_page.dart';
 import 'package:midterm/pages/main_page.dart';
 import 'package:midterm/placeholder.dart';
 import 'package:hive/hive.dart';
@@ -100,48 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return MyScaffold(
-      route: AppConfig.routeList[0].route,
-      body: Scaffold(
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: ValueListenableBuilder<Box<PageNumber>>(
-            valueListenable: Boxes.getPageNumber().listenable(),
-            builder: (context, box, _) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '${box.get('number')!.number}',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                ],
-              );
-            },
-            // child: Column(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: <Widget>[
-            //     Text(
-            //       'You have pushed the button this many times:',
-            //     ),
-            //     Text(
-            //       '$_counter',
-            //       style: Theme.of(context).textTheme.headline4,
-            //     ),
-            //   ],
-            // ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _incrementCounter,
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ), // This trailing comma makes auto-formatting nicer for build methods.
-      ),
-    );
+        route: AppConfig.routeList[0].route, body: LastTimePage());
   }
 }
 
