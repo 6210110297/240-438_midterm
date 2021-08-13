@@ -61,11 +61,11 @@ class _LastTimePageState extends State<LastTimePage> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 50),
+                    margin: EdgeInsets.only(left: 50, right: 50),
                     width: 80,
                     child: DropdownButton<String>(
                       value: currentSort,
-                      icon: const Icon(Icons.pages),
+                      icon: const Icon(Icons.sort),
                       iconSize: 24,
                       elevation: 16,
                       style: const TextStyle(color: Colors.deepPurple),
@@ -160,15 +160,21 @@ class _LastTimePageState extends State<LastTimePage> {
         showEditLastTime(lastTime: lastTime);
       },
       key: ValueKey(lastTime),
-      leading: Text(
-        lastTime.title,
+      leading: Container(
+        child: Text(
+          lastTime.title,
+        ),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(lastTime.tag),
+          SizedBox(width: 200),
+          Expanded(
+              child: Text(
+            lastTime.tag,
+          )),
           // Text(DateFormat("yyyy-MM-dd").format(lastTime.lastTime)),
-          Text(lastTime.lastTime.toString()),
+          Expanded(child: Text(lastTime.lastTime.toString())),
         ],
       ),
     );

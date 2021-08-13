@@ -61,15 +61,15 @@ class _MyMainState extends State<MyScaffold> {
         title: Text(AppConfig.appTitle),
       ),
       body: widget.body,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTapTapped,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.pages), label: '2nd'),
-          BottomNavigationBarItem(icon: Icon(Icons.pages), label: '3rd'),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   onTap: onTapTapped,
+      //   currentIndex: _currentIndex,
+      //   items: [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.pages), label: '2nd'),
+      //     BottomNavigationBarItem(icon: Icon(Icons.pages), label: '3rd'),
+      //   ],
+      // ),
     );
   }
 
