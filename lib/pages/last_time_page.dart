@@ -280,13 +280,16 @@ class _LastTimePageState extends State<LastTimePage> {
   }
 
   void sortingByDropDown(List<LastTimeItem> lastTimeList) {
+    print(currentSort);
+    print(currentTag);
+
     if (currentTag != null && currentTag != 'None') {
       lastTimeList.removeWhere((last) => last.tag != currentTag);
     }
-    if (currentSort == listTag[1]) {
-      lastTimeList.sort((a, b) => a.lastTime.compareTo(b.lastTime));
-    } else if (currentSort == listTag[2]) {
+    if (currentSort == listSort[1]) {
       lastTimeList.sort((a, b) => b.lastTime.compareTo(a.lastTime));
+    } else if (currentSort == listSort[2]) {
+      lastTimeList.sort((a, b) => a.lastTime.compareTo(b.lastTime));
     }
     lastTimeList.forEach((e) {
       print(e.lastTime);
