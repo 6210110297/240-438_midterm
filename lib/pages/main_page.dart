@@ -66,8 +66,8 @@ class _MyMainState extends State<MyScaffold> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.pages), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.pages), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.pages), label: '2nd'),
+          BottomNavigationBarItem(icon: Icon(Icons.pages), label: '3rd'),
         ],
       ),
     );
