@@ -14,6 +14,12 @@ class LastTimePage extends StatefulWidget {
 }
 
 class _LastTimePageState extends State<LastTimePage> {
+  List<String> listTag = ['None', 'Normal', 'Important', 'Work', 'Home'];
+  List<String> listSort = ['None', 'Newer', 'Older'];
+
+  String? currentTag;
+  String? currentSort;
+  List<bool> isSort = [true, false, false];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +36,65 @@ class _LastTimePageState extends State<LastTimePage> {
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [],
+                children: [
+                  Container(
+                    width: 80,
+                    child: DropdownButton<String>(
+                      value: currentTag,
+                      icon: const Icon(Icons.pages),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      isExpanded: true,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          currentTag = newValue!;
+                        });
+                      },
+                      items:
+                          listTag.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 50),
+                    width: 80,
+                    child: DropdownButton<String>(
+                      value: currentSort,
+                      icon: const Icon(Icons.pages),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      isExpanded: true,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          currentSort = newValue!;
+                        });
+                      },
+                      items: listSort
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
-              width: 500,
               alignment: Alignment.center,
               child: ValueListenableBuilder<Box<LastTimeItem>>(
                   valueListenable: Boxes.getListItems().listenable(),
                   builder: (context, box, _) {
                     final lastTimeList =
                         box.values.toList().cast<LastTimeItem>();
+                    sortingByDropDown(lastTimeList);
                     return ReorderableListView.builder(
                       shrinkWrap: true,
                       itemCount: lastTimeList.length,
@@ -122,7 +176,6 @@ class _LastTimePageState extends State<LastTimePage> {
                     FlatButton(
                       child: new Text(
                         "Yes",
-                        style: Theme.of(context).textTheme.overline,
                         textScaleFactor: 0.9,
                       ),
                       onPressed: () {
@@ -134,7 +187,6 @@ class _LastTimePageState extends State<LastTimePage> {
                     FlatButton(
                       child: new Text(
                         "No",
-                        style: Theme.of(context).textTheme.headline3,
                         textScaleFactor: 0.9,
                       ),
                       onPressed: () {
@@ -201,7 +253,6 @@ class _LastTimePageState extends State<LastTimePage> {
                     FlatButton(
                       child: new Text(
                         "Yes",
-                        style: Theme.of(context).textTheme.overline,
                         textScaleFactor: 0.9,
                       ),
                       onPressed: () {
@@ -212,7 +263,6 @@ class _LastTimePageState extends State<LastTimePage> {
                     FlatButton(
                       child: new Text(
                         "No",
-                        style: Theme.of(context).textTheme.headline3,
                         textScaleFactor: 0.9,
                       ),
                       onPressed: () {
@@ -227,5 +277,19 @@ class _LastTimePageState extends State<LastTimePage> {
         );
       },
     );
+  }
+
+  void sortingByDropDown(List<LastTimeItem> lastTimeList) {
+    if (currentTag != null && currentTag != 'None') {
+      lastTimeList.removeWhere((last) => last.tag != currentTag);
+    }
+    if (currentSort == listTag[1]) {
+      lastTimeList.sort((a, b) => a.lastTime.compareTo(b.lastTime));
+    } else if (currentSort == listTag[2]) {
+      lastTimeList.sort((a, b) => b.lastTime.compareTo(a.lastTime));
+    }
+    lastTimeList.forEach((e) {
+      print(e.lastTime);
+    });
   }
 }
