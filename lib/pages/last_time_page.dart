@@ -19,7 +19,7 @@ class _LastTimePageState extends State<LastTimePage> {
 
   String? currentTag;
   String? currentSort;
-  List<bool> isSort = [true, false, false];
+  bool resorting = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +92,11 @@ class _LastTimePageState extends State<LastTimePage> {
               child: ValueListenableBuilder<Box<LastTimeItem>>(
                   valueListenable: Boxes.getListItems().listenable(),
                   builder: (context, box, _) {
+                    if (resorting) {
+                      return CircularProgressIndicator(
+                        strokeWidth: 2,
+                      );
+                    }
                     final lastTimeList =
                         box.values.toList().cast<LastTimeItem>();
                     sortingByDropDown(lastTimeList);
@@ -131,9 +136,14 @@ class _LastTimePageState extends State<LastTimePage> {
                         _list.forEach((e) {
                           print(e.title);
                         });
-
+                        setState(() {
+                          resorting = true;
+                        });
                         await box.clear();
                         box.addAll(_list);
+                        setState(() {
+                          resorting = false;
+                        });
                       },
                     );
                   }),
