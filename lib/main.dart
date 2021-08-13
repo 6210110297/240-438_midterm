@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:midterm/models/numBox.dart';
+import 'package:midterm/models/list_item.dart';
+import 'package:midterm/models/boxes.dart';
 import 'package:midterm/models/page_number.dart';
 import 'package:midterm/pages/main_page.dart';
 import 'package:midterm/placeholder.dart';
@@ -14,8 +15,10 @@ void main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(PageNumberAdapter());
+  Hive.registerAdapter(ListItemAdapter());
 
   await Hive.openBox<PageNumber>('page_number');
+  await Hive.openBox<ListItem>('list');
 
   runApp(MainPage());
 }
@@ -65,14 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
-    final box = NumBox.getPageNumber();
+    final box = Boxes.getPageNumber();
     final pageNumber = PageNumber()..number = _counter;
     box.put('number', pageNumber);
   }
 
   @override
   void initState() {
-    final box = NumBox.getPageNumber();
+    final box = Boxes.getPageNumber();
     if (box.get('number') == null) {
       final pageNumber = PageNumber()..number = 0;
       box.put('number', pageNumber);
@@ -102,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: ValueListenableBuilder<Box<PageNumber>>(
-            valueListenable: NumBox.getPageNumber().listenable(),
+            valueListenable: Boxes.getPageNumber().listenable(),
             builder: (context, box, _) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
